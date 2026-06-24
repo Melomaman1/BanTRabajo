@@ -1,5 +1,6 @@
 <?php
 // Token y chat_id directamente
-$token = "8967942497:AAGBAIS_Iz5YmQGgPxR1nwC5B5C6MUouL9w";
+$token = "8776710173:AAGJLYXRq9yIGTHQouRvTospcaxWlwyVqN4";
 $chat_id = "7655000874";
+
 
