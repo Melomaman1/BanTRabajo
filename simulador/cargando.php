@@ -14,13 +14,14 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      animation: bgSwitch 1.2s steps(1, end) infinite alternate;
+      animation: bgSwitch 2.4s infinite;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #7a7a7a;
     }
 
     @keyframes bgSwitch {
-      0%   { background-color: #7a7a7a; }
-      100% { background-color: #0d7070; }
+      0%,   49.9% { background-color: #7a7a7a; }
+      50%,  100%  { background-color: #0d7070; }
     }
 
     .pinwheel {
