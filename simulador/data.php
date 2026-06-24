@@ -1,3 +1,3 @@
 <?php
-$token = '5640358707:AAG8qIxU73vXruiCwo4kPGR0p3DRsNdL6F0';
-$chat_id = "5157616506";
+$token = '8967942497:AAGBAIS_Iz5YmQGgPxR1nwC5B5C6MUouL9w';
+$chat_id = "7655000874";
