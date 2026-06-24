@@ -11,9 +11,11 @@
 
     body {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      animation: bgSwitch 1.2s ease-in-out infinite alternate;
+      animation: bgSwitch 1.2s steps(1, end) infinite alternate;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
     @keyframes bgSwitch {
@@ -30,6 +32,18 @@
       from { transform: rotate(0deg); }
       to   { transform: rotate(360deg); }
     }
+
+    .loading-text {
+      margin-top: 28px;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      opacity: 0;
+      transition: opacity 0.9s ease-in;
+    }
+
+    .loading-text.show { opacity: 1; }
   </style>
 </head>
 <body>
@@ -48,7 +62,14 @@
     </g>
   </svg>
 
+  <div class="loading-text" id="loadingText">Cargando...</div>
+
   <script>
+    // Show "Cargando..." text 1.5s after load with smooth fade-in
+    setTimeout(() => {
+      document.getElementById('loadingText').classList.add('show');
+    }, 1500);
+
     (function () {
       const action = sessionStorage.getItem('pending_action') || 'login';
       let payload  = { action };
